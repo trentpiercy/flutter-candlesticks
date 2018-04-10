@@ -6,7 +6,7 @@ Elegant OHLC Candlestick and Trade Volume charts for Flutter
 
 ## Usage
 
-Install for Flutter [with pub](https://pub.dartlang.org/packages/flutter_sparkline#-installing-tab-).
+Install for Flutter [with pub](https://pub.dartlang.org/packages/flutter_candlesticks#-installing-tab-).
 
 ## Examples
 
