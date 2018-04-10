@@ -10,3 +10,14 @@ Install for Flutter [with pub](https://pub.dartlang.org/packages/flutter_candles
 
 ## Examples
 
+### No Grid Lines
+
+Code
+
+Screenshot
+- 10 data ploints
+- 50
+- 100
+
+### Grid Lines
+
