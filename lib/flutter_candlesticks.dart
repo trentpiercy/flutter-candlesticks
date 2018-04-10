@@ -70,7 +70,6 @@ class OHLCVGraph extends StatelessWidget {
 }
 
 class _OHLCVPainter extends CustomPainter {
-        @required this.enableGridLines,
   _OHLCVPainter(
     this.data, {
     @required this.lineWidth,
