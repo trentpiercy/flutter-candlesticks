@@ -1,6 +1,6 @@
 name: flutter_candlesticks
 description: Elegant OHLC Candlestick and Trade Volume charts for Flutter.
-version: 0.0.2
+version: 0.0.3
 author: Trent Piercy <trentjpiercy@gmail.com>
 homepage: https://github.com/trentpiercy/flutter-candlesticks
 
