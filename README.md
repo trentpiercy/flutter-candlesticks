@@ -32,8 +32,8 @@ new OHLCVGraph(
 )
 ```
 
-<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_large.png" width="720">
-<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/dark_large.png" width="720">
+<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_large.png" width="50%">
+<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/dark_large.png" width="50%">
 
 > Candle size dynamically changes by amount of data
 
@@ -54,8 +54,8 @@ new OHLCVGraph(
 )
 ```
 
-<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_large_gridlines.png" width="720">
-<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_small_gridlines.png" width="720">
+<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_large_gridlines.png" width="50%">
+<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_small_gridlines.png" width="50%">
 
 ### Full App Example
 ```dart
