@@ -8,8 +8,56 @@ Elegant OHLC Candlestick and Trade Volume charts for Flutter
 
 Install for Flutter [with pub](https://pub.dartlang.org/packages/flutter_candlesticks#-installing-tab-).
 
+| Property           | Description                                                            |
+|--------------------|------------------------------------------------------------------------|
+| data               | Required. List of maps containing open, high, low, close and volumeto  |
+| enableGridLines    | Required. Enable or disable grid lines                                 |
+| volumeProp         | Required. Proportion of container to be given to volume bars           |
+| lineWidth          | Default 1.0. Width of most lines                                       |
+| gridLineAmount     | Default 5. Number of grid lines to draw. Labels automatically assigned |
+| gridLineWidth      | Default 0.5. Width of grid lines                                       |
+| gridLineColor      | Default Colors.grey. Color of grid lines                               |
+| gridLineLabelColor | Default Colors.grey. Color of grid line labels                         |
+
 ## Examples
 
+### No Grid Lines
+
+```dart
+new OHLCVGraph(
+    data: sampleData,
+    enableGridLines: false,
+    volumeProp: 0.2
+    )
+)
+```
+
+<img src="screenshots/white_large.png" width="720">
+<img src="screenshots/dark_large.png" width="720">
+
+> Candle size dynamically changes by amount of data
+
+<img src="screenshots/white_small.png" width="720">
+
+
+### Grid Lines
+
+```dart
+new OHLCVGraph(
+    data: sampleData,
+    enableGridLines: true,
+    volumeProp: 0.2,
+    gridLineAmount: 5,
+    gridLineColor: Colors.grey[300],
+    gridLineLabelColor: Colors.grey
+    )
+)
+```
+
+<img src="screenshots/white_large_gridlines.png" width="720">
+<img src="screenshots/white_small_gridlines.png" width="720">
+
+### Full App Example
 ```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_candlesticks/flutter_candlesticks.dart';
@@ -41,53 +89,3 @@ void main() {
   );
 }
 ```
-
-
-### No Grid Lines
-
-```dart
-new OHLCVGraph(
-	data: sampleData,
-	enableGridLines: false,
-    volumeProp: 0.2
-    )
-)
-```
-
-![Sample - Large Candles](screenshots/white_large.png)
-![Sample - Large Candles](screenshots/dark_large.png)
-
-> Candle size dynamically changes by amount of data
-
-![Sample - Small Candles](screenshots/white_small.png)
-
-
-### Grid Lines
-
-```dart
-new OHLCVGraph(
-	data: sampleData,
-	enableGridLines: true,
-    volumeProp: 0.2,
-    gridLineAmount: 5,
-    gridLineColor: Colors.grey[300],
-    gridLineLabelColor: Colors.grey
-    )
-)
-```
-
-![Sample - Small Candles w/ Grid Lines](screenshots/white_small_gridlines.png)
-![Sample - Large Candles w/ Grid Lines](screenshots/white_large_gridlines.png)
-
-### All Options
-
-| Property           | Description                                                            |
-|--------------------|------------------------------------------------------------------------|
-| data               | Required. List of maps containing open, high, low, close and volumeto  |
-| enableGridLines    | Required. Enable or disable grid lines                                 |
-| volumeProp         | Required. Proportion of container to be given to volume bars           |
-| lineWidth          | Default 1.0. Width of most lines                                       |
-| gridLineAmount     | Default 5. Number of grid lines to draw. Labels automatically assigned |
-| gridLineWidth      | Default 0.5. Width of grid lines                                       |
-| gridLineColor      | Default Colors.grey. Color of grid lines                               |
-| gridLineLabelColor | Default Colors.grey. Color of grid line labels                         |
