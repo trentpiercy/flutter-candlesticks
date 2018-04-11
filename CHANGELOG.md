@@ -1,3 +1,7 @@
+## [0.0.5] - 2018-04-10
+
+* Corrected README.md
+
 ## [0.0.4] - 2018-04-10
 
 * Fix screenshots for pub
