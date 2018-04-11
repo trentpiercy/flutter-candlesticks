@@ -160,7 +160,7 @@ class _OHLCVPainter extends CustomPainter {
           text: new TextSpan(
               text: "\$" + numCommaParse(_maxVolume),
               style: new TextStyle(
-                  color: gridLineColor,
+                  color: gridLineLabelColor,
                   fontSize: 10.0,
                   fontWeight: FontWeight.bold)),
           textDirection: TextDirection.ltr);

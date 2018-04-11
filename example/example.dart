@@ -10,20 +10,20 @@ void main() {
     {"open":80.0, "high":85.0, "low":40.0, "close":50, "volumeto":3000.0},
   ];
 
-  List sampleData = singleSample*10;
-
   runApp(
     new MaterialApp(
-      home: new Center(
-        child: new Container(
-          height: 500.0,
-          child: new OHLCVGraph(
-            data: sampleData,
-            enableGridLines: false,
-            volumeProp: 0.2
+      home: new Scaffold(
+        body: new Center(
+          child: new Container(
+            height: 500.0,
+            child: new OHLCVGraph(
+                data: sampleData,
+                enableGridLines: false,
+                volumeProp: 0.2
+            ),
           ),
         ),
-      ),
+      )
     )
   );
 }
