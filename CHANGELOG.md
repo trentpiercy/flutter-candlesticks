@@ -1,3 +1,7 @@
+## [0.0.6] - 2018-04-12
+
+* Improved labeling efficiency
+
 ## [0.0.5] - 2018-04-10
 
 * Corrected README.md
