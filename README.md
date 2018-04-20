@@ -53,7 +53,7 @@ new OHLCVGraph(
 )
 ```
 
-<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_large_gridlines.png" width="50%"><img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_small_gridlines.png" width="50%">
+<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_small_gridlines.png" width="50%"><img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/dark_large_gridlines.png" width="50%">
 
 ### Full App Example
 ```dart

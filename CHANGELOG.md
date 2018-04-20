@@ -1,3 +1,7 @@
+## [0.0.7] - 2018-04-20
+
+* Moved labels to right of grid lines
+
 ## [0.0.6] - 2018-04-12
 
 * Improved labeling efficiency
