@@ -1,3 +1,7 @@
+## [0.0.8] - 2018-04-26
+
+* Update to Flutter SDK 0.3.1
+
 ## [0.0.7] - 2018-04-20
 
 * Moved labels to right of grid lines
