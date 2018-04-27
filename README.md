@@ -18,6 +18,7 @@ Install for Flutter [with pub](https://pub.dartlang.org/packages/flutter_candles
 | gridLineWidth      | Default 0.5. Width of grid lines                                       |
 | gridLineColor      | Default Colors.grey. Color of grid lines                               |
 | gridLineLabelColor | Default Colors.grey. Color of grid line labels                         |
+| labelPrefix        | Default "$". Prefix before grid line labels.                           |
 
 ## Examples
 

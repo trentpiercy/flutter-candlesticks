@@ -1,3 +1,8 @@
+## [0.0.9] - 2018-04-26
+
+* Fix label value bug
+* Added labelPrefix param
+
 ## [0.0.8] - 2018-04-26
 
 * Update to Flutter SDK 0.3.1

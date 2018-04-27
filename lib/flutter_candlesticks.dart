@@ -12,6 +12,7 @@ class OHLCVGraph extends StatelessWidget {
     this.gridLineAmount = 5,
     this.gridLineWidth = 0.5,
     this.gridLineLabelColor = Colors.grey,
+    this.labelPrefix = "\$",
     @required this.enableGridLines,
     @required this.volumeProp,
   })  : assert(data != null),
@@ -46,6 +47,9 @@ class OHLCVGraph extends StatelessWidget {
   final double fallbackHeight;
   final double fallbackWidth;
 
+  /// Symbol prefix for grid line labels
+  final String labelPrefix;
+
   @override
   Widget build(BuildContext context) {
     return new LimitedBox(
@@ -62,6 +66,7 @@ class OHLCVGraph extends StatelessWidget {
           gridLineLabelColor: gridLineLabelColor,
           enableGridLines: enableGridLines,
           volumeProp: volumeProp,
+          labelPrefix: labelPrefix,
         ),
       ),
     );
@@ -78,6 +83,7 @@ class _OHLCVPainter extends CustomPainter {
     @required this.gridLineWidth,
     @required this.gridLineLabelColor,
     @required this.volumeProp,
+    @required this.labelPrefix,
   });
 
   final List data;
@@ -88,6 +94,7 @@ class _OHLCVPainter extends CustomPainter {
   final int gridLineAmount;
   final double gridLineWidth;
   final Color gridLineLabelColor;
+  final String labelPrefix;
 
   final double volumeProp;
 
@@ -123,13 +130,20 @@ class _OHLCVPainter extends CustomPainter {
       double gridLineValue;
       for (int i = 0; i < gridLineAmount; i++) {
         // Label grid lines
-        gridLineValue = _max - (((_max - _min) / gridLineAmount) * (i + 1));
-        String gridLineText = gridLineValue.toString()[4] != "."
-            ? gridLineValue.toString().substring(0, 5)
-            : gridLineValue.toString().substring(0, 4);
+        gridLineValue = _max - (((_max - _min) / (gridLineAmount - 1)) * i);
+
+        String gridLineText;
+        if (gridLineValue.toString().length > 4) {
+          gridLineText = gridLineValue.toString()[4] != "."
+              ? gridLineValue.toString().substring(0, 5)
+              : gridLineValue.toString().substring(0, 4);
+        } else {
+          gridLineText = gridLineValue.toString();
+        }
+
         gridLineTextPainters.add(new TextPainter(
             text: new TextSpan(
-                text: "\$" + gridLineText,
+                text: labelPrefix + gridLineText,
                 style: new TextStyle(
                     color: gridLineLabelColor,
                     fontSize: 10.0,
