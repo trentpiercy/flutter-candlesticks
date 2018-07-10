@@ -1,3 +1,8 @@
+## [0.1.0] - 2018-07-09
+
+* Fix gridLineWidth not being used
+* Better grid line label text handling
+
 ## [0.0.9] - 2018-04-26
 
 * Fix label value bug
