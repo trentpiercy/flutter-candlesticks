@@ -2,11 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class OHLCVGraph extends StatelessWidget {
-
   OHLCVGraph({
     Key key,
     @required this.data,
-    this.lineWidth = 1.0,
+    this.candleSpacing = 1.0,
     this.fallbackHeight = 100.0,
     this.fallbackWidth = 300.0,
     this.gridLineColor = Colors.grey,
@@ -14,13 +13,13 @@ class OHLCVGraph extends StatelessWidget {
     this.gridLineWidth = 0.5,
     this.gridLineLabelColor = Colors.grey,
     this.labelPrefix = "\$",
-    this.redPaint,
-    this.greenPaint,
+    this.decreasePaint,
+    this.increasePaint,
     this.volumePaint,
     @required this.enableGridLines,
     @required this.volumeProp,
   })  : assert(data != null),
-        assert(lineWidth != null),
+        assert(candleSpacing != null),
         super(key: key);
 
   /// OHLCV data to graph
@@ -28,8 +27,8 @@ class OHLCVGraph extends StatelessWidget {
   /// Example: [["open" : 40.0, "high" : 75.0, "low" : 25.0, "close" : 50.0, "volumeto" : 5000.0}, {...}]
   final List data;
 
-  /// All lines in chart are drawn with this width
-  final double lineWidth;
+  /// spacing between lines
+  final double candleSpacing;
 
   /// Enable or disable grid lines
   final bool enableGridLines;
@@ -55,9 +54,13 @@ class OHLCVGraph extends StatelessWidget {
   /// Symbol prefix for grid line labels
   final String labelPrefix;
 
-  /// Colors
-  final Paint greenPaint;
-  final Paint redPaint;
+  /// Increasing candle paint
+  final Paint increasePaint;
+
+  /// Decreasing candle paint
+  final Paint decreasePaint;
+
+  /// Volume candle paint (defaults to Increasing/Decreasing paints if empty)
   final Paint volumePaint;
 
   @override
@@ -69,7 +72,7 @@ class OHLCVGraph extends StatelessWidget {
         size: Size.infinite,
         painter: new _OHLCVPainter(
           data,
-          lineWidth: lineWidth,
+          candleSpacing: candleSpacing,
           gridLineColor: gridLineColor,
           gridLineAmount: gridLineAmount,
           gridLineWidth: gridLineWidth,
@@ -77,14 +80,14 @@ class OHLCVGraph extends StatelessWidget {
           enableGridLines: enableGridLines,
           volumeProp: volumeProp,
           labelPrefix: labelPrefix,
-          redPaint: redPaint ?? (new Paint()
+          decreasePaint: decreasePaint ?? (new Paint()
             ..color = Colors.red
-            ..strokeWidth = lineWidth
+            ..strokeWidth = 1.0
             ..style = PaintingStyle.fill
           ),
-          greenPaint: greenPaint ?? (new Paint()
+          increasePaint: increasePaint ?? (new Paint()
             ..color = Colors.green
-            ..strokeWidth = lineWidth
+            ..strokeWidth = 1.0
             ..style = PaintingStyle.stroke
           ),
           volumePaint: volumePaint
@@ -95,10 +98,9 @@ class OHLCVGraph extends StatelessWidget {
 }
 
 class _OHLCVPainter extends CustomPainter {
-
   _OHLCVPainter(
     this.data, {
-    @required this.lineWidth,
+    @required this.candleSpacing,
     @required this.enableGridLines,
     @required this.gridLineColor,
     @required this.gridLineAmount,
@@ -106,14 +108,13 @@ class _OHLCVPainter extends CustomPainter {
     @required this.gridLineLabelColor,
     @required this.volumeProp,
     @required this.labelPrefix,
-    @required this.redPaint,
-    @required this.greenPaint,
+    @required this.decreasePaint,
+    @required this.increasePaint,
     @required this.volumePaint,
   });
 
   final List data;
-  final double lineWidth;
-
+  final double candleSpacing;
   final bool enableGridLines;
   final Color gridLineColor;
   final int gridLineAmount;
@@ -123,8 +124,8 @@ class _OHLCVPainter extends CustomPainter {
 
   final double volumeProp;
 
-  final Paint redPaint;
-  final Paint greenPaint;
+  final Paint decreasePaint;
+  final Paint increasePaint;
   final Paint volumePaint;
 
   double _min;
@@ -167,7 +168,9 @@ class _OHLCVPainter extends CustomPainter {
         } else if (gridLineValue < 999) {
           gridLineText = gridLineValue.toStringAsFixed(2);
         } else {
-          gridLineText = gridLineValue.round().toString();
+          gridLineText = gridLineValue.round().toString().replaceAllMapped(
+              new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+              (Match m) => "${m[1]},");
         }
 
         gridLineTextPainters.add(new TextPainter(
@@ -206,6 +209,8 @@ class _OHLCVPainter extends CustomPainter {
     double width = size.width;
     final double height = size.height * (1 - volumeProp);
 
+    double gridLineY;
+
     if (enableGridLines) {
       width = size.width - gridLineTextPainters[0].text.text.length * 6;
       Paint gridPaint = new Paint()
@@ -213,7 +218,6 @@ class _OHLCVPainter extends CustomPainter {
         ..strokeWidth = gridLineWidth;
 
       double gridLineDist = height / (gridLineAmount - 1);
-      double gridLineY;
 
       // Draw grid lines
       for (int i = 0; i < gridLineAmount; i++) {
@@ -225,9 +229,6 @@ class _OHLCVPainter extends CustomPainter {
         gridLineTextPainters[i]
             .paint(canvas, new Offset(width + 2.0, gridLineY - 6.0));
       }
-
-      // Label volume line
-      maxVolumePainter.paint(canvas, new Offset(0.0, gridLineY + 2.0));
     }
 
     final double heightNormalizer = height / (_max - _min);
@@ -242,57 +243,59 @@ class _OHLCVPainter extends CustomPainter {
 
     // Loop through all data
     for (int i = 0; i < data.length; i++) {
-      rectLeft = (i * rectWidth) + lineWidth / 2;
-      rectRight = ((i + 1) * rectWidth) - lineWidth / 2;
+      rectLeft = (i * rectWidth);
+      rectRight = ((i + 1) * rectWidth);
 
-      double volumeBarTop = (height + volumeHeight) -
-          (data[i]["volumeto"] * volumeNormalizer - lineWidth);
-      double volumeBarBottom = height + volumeHeight;
+      double volBarTop = (height + volumeHeight) -
+          (data[i]["volumeto"] * volumeNormalizer);
+      double volBarBottom = height + volumeHeight;
 
-      if (data[i]["open"] > data[i]["close"]) {
-        // Draw candlestick if decrease
-        rectTop = height - (data[i]["open"] - _min) * heightNormalizer;
-        rectBottom = height - (data[i]["close"] - _min) * heightNormalizer;
-        rectPaint = redPaint;
+      bool isDecreasing = (data[i]["open"] > data[i]["close"]);
 
-        var ocRect = new Rect.fromLTRB(rectLeft, rectTop, rectRight, rectBottom);
-        canvas.drawRect(ocRect, rectPaint);
-      } else {
-        // Draw candlestick if increase
-        rectTop = (height - (data[i]["close"] - _min) * heightNormalizer) +
-            lineWidth / 2;
-        rectBottom = (height - (data[i]["open"] - _min) * heightNormalizer) -
-            lineWidth / 2;
-        rectPaint = greenPaint;
-      }
+      rectPaint = isDecreasing ? decreasePaint : increasePaint;
+
+      rectTop = height - (data[i][isDecreasing ? "open" : "close"] - _min)
+          * heightNormalizer;
+      rectBottom = height - (data[i][isDecreasing ? "close" : "open"] - _min)
+          * heightNormalizer;
 
       // Draw candlestick body
-      var ocRect = new Rect.fromLTRB(rectLeft, rectTop, rectRight, rectBottom);
+      var ocRect = new Rect.fromLTRB(
+          rectLeft + candleSpacing, rectTop, rectRight - candleSpacing, rectBottom);
+      if (rectPaint.style == PaintingStyle.stroke)
+        ocRect = ocRect.deflate(rectPaint.strokeWidth/2);
       canvas.drawRect(ocRect, rectPaint);
 
       // Draw volume bars
       Rect volumeRect = new Rect.fromLTRB(
-          rectLeft, volumeBarTop, rectRight, volumeBarBottom);
+          rectLeft + candleSpacing, volBarTop, rectRight - candleSpacing, volBarBottom);
+      if (volumePaint != null && volumePaint.style == PaintingStyle.stroke)
+        volumeRect = volumeRect.deflate(volumePaint.strokeWidth/2);
       canvas.drawRect(volumeRect, volumePaint ?? rectPaint);
 
       // Draw low/high candlestick wicks
       double low = height - (data[i]["low"] - _min) * heightNormalizer;
       double high = height - (data[i]["high"] - _min) * heightNormalizer;
       canvas.drawLine(
-          new Offset(rectLeft + rectWidth / 2 - lineWidth / 2, rectBottom),
-          new Offset(rectLeft + rectWidth / 2 - lineWidth / 2, low),
+          new Offset(rectLeft + (rectWidth) / 2, rectBottom),
+          new Offset(rectLeft + (rectWidth) / 2, low),
           rectPaint);
       canvas.drawLine(
-          new Offset(rectLeft + rectWidth / 2 - lineWidth / 2, rectTop),
-          new Offset(rectLeft + rectWidth / 2 - lineWidth / 2, high),
+          new Offset(rectLeft + (rectWidth) / 2, rectTop),
+          new Offset(rectLeft + (rectWidth) / 2, high),
           rectPaint);
+    }
+
+    if (enableGridLines) {
+      // Label volume line
+      maxVolumePainter.paint(canvas, new Offset(0.0, gridLineY + 2.0));
     }
   }
 
   @override
   bool shouldRepaint(_OHLCVPainter old) {
     return data != old.data ||
-        lineWidth != old.lineWidth ||
+        candleSpacing != old.candleSpacing ||
         enableGridLines != old.enableGridLines ||
         gridLineColor != old.gridLineColor ||
         gridLineAmount != old.gridLineAmount ||
