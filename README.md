@@ -8,17 +8,19 @@ Elegant OHLC Candlestick and Trade Volume charts for Flutter
 
 Install for Flutter [with pub](https://pub.dartlang.org/packages/flutter_candlesticks#-installing-tab-).
 
-| Property           | Description                                                            |
-|--------------------|------------------------------------------------------------------------|
-| data               | Required. List of maps containing open, high, low, close and volumeto  |
-| enableGridLines    | Required. Enable or disable grid lines                                 |
-| volumeProp         | Required. Proportion of container to be given to volume bars           |
-| lineWidth          | Default 1.0. Width of most lines                                       |
-| gridLineAmount     | Default 5. Number of grid lines to draw. Labels automatically assigned |
-| gridLineWidth      | Default 0.5. Width of grid lines                                       |
-| gridLineColor      | Default Colors.grey. Color of grid lines                               |
-| gridLineLabelColor | Default Colors.grey. Color of grid line labels                         |
-| labelPrefix        | Default "$". Prefix before grid line labels.                           |
+| Property           | Description                                                              |
+|--------------------|--------------------------------------------------------------------------|
+| data               | Required. List of maps containing open, high, low, close and volumeto    |
+| enableGridLines    | Required. Enable or disable grid lines                                   |
+| volumeProp         | Required. Proportion of container to be given to volume bars             |
+| lineWidth          | Default `1.0`. Width of most lines                                       |
+| gridLineAmount     | Default `5`. Number of grid lines to draw. Labels automatically assigned |
+| gridLineWidth      | Default `0.5`. Width of grid lines                                       |
+| gridLineColor      | Default `Colors.grey`. Color of grid lines                               |
+| gridLineLabelColor | Default `Colors.grey`. Color of grid line labels                         |
+| labelPrefix        | Default `"$"`. Prefix before grid line labels.                           |
+| increaseColor      | Default `Colors.green`. Prefix before grid line labels.                  |
+| decreaseColor      | Default `"$"`. Prefix before grid line labels.                           |
 
 ## Examples
 
