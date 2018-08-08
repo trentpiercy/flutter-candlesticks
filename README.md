@@ -19,8 +19,8 @@ Install for Flutter [with pub](https://pub.dartlang.org/packages/flutter_candles
 | gridLineColor      | Default `Colors.grey`. Color of grid lines                               |
 | gridLineLabelColor | Default `Colors.grey`. Color of grid line labels                         |
 | labelPrefix        | Default `"$"`. Prefix before grid line labels.                           |
-| increaseColor      | Default `Colors.green`. Prefix before grid line labels.                  |
-| decreaseColor      | Default `Colors.red`. Prefix before grid line labels.                    |
+| increaseColor      | Default `Colors.green`. Color of increasing candles.                     |
+| decreaseColor      | Default `Colors.red`. Color of decreasing candles.                       |
 
 ## Examples
 
