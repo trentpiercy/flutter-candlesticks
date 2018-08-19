@@ -80,7 +80,7 @@ new OHLCVGraph(
     ,
     volumePaint: new Paint()
       ..color = Colors.grey
-      ..style = PaintingStyle.stroke,
+      ..style = PaintingStyle.fill,
     candleSpacing: 1.2,
 )
 ```
