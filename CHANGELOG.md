@@ -1,3 +1,7 @@
+## [0.1.1] - 2018-08-06
+
+* Added increaseColor and decreaseColor options
+
 ## [0.1.0] - 2018-07-09
 
 * Fix gridLineWidth not being used
