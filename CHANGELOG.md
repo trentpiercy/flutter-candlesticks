@@ -1,3 +1,7 @@
+## [0.1.2] - 2018-08-31
+
+* Update version constraints for Dart 2.1.0
+
 ## [0.1.1] - 2018-08-06
 
 * Added increaseColor and decreaseColor options
