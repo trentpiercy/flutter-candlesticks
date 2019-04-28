@@ -1,3 +1,7 @@
+## [0.1.3] - 2019-04-28
+
+* Dart 2
+
 ## [0.1.2] - 2018-08-31
 
 * Update version constraints for Dart 2.1.0
