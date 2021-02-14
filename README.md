@@ -21,6 +21,7 @@ Install for Flutter [with pub](https://pub.dartlang.org/packages/flutter_candles
 | labelPrefix        | Default `"$"`. Prefix before grid line labels.                           |
 | increaseColor      | Default `Colors.green`. Color of increasing candles.                     |
 | decreaseColor      | Default `Colors.red`. Color of decreasing candles.                       |
+| enableVolume       | Default `true`. Enables drawing the volume bars.                         |
 
 ## Examples
 
