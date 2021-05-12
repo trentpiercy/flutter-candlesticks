@@ -187,7 +187,8 @@ class _OHLCVPainter extends CustomPainter {
     final double height = size.height * (1 - volumeProp);
 
     if (enableGridLines) {
-      width = size.width - gridLineTextPainters[0].text.text.length * 6;
+      InlineSpan inlineSpan = gridLineTextPainters[0].text;
+      width = size.width - inlineSpan.toPlainText().length * 6;
       Paint gridPaint = new Paint()
         ..color = gridLineColor
         ..strokeWidth = gridLineWidth;
