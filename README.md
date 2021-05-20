@@ -8,19 +8,20 @@ Elegant OHLC Candlestick and Trade Volume charts for Flutter
 
 Install for Flutter [with pub](https://pub.dartlang.org/packages/flutter_candlesticks#-installing-tab-).
 
-| Property           | Description                                                              |
-|--------------------|--------------------------------------------------------------------------|
-| data               | Required. List of maps containing open, high, low, close and volumeto    |
-| enableGridLines    | Required. Enable or disable grid lines                                   |
-| volumeProp         | Required. Proportion of container to be given to volume bars             |
-| lineWidth          | Default `1.0`. Width of most lines                                       |
-| gridLineAmount     | Default `5`. Number of grid lines to draw. Labels automatically assigned |
-| gridLineWidth      | Default `0.5`. Width of grid lines                                       |
-| gridLineColor      | Default `Colors.grey`. Color of grid lines                               |
-| gridLineLabelColor | Default `Colors.grey`. Color of grid line labels                         |
-| labelPrefix        | Default `"$"`. Prefix before grid line labels.                           |
-| increaseColor      | Default `Colors.green`. Color of increasing candles.                     |
-| decreaseColor      | Default `Colors.red`. Color of decreasing candles.                       |
+| Property           | Description                                                               |
+|--------------------|---------------------------------------------------------------------------|
+| data               | Required. List of maps containing open, high, low, close and volumeto     |
+| enableGridLines    | Required. Enable or disable grid lines                                    |
+| volumeProp         | Required. Proportion of container to be given to volume bars              |
+| candleSpacing      | Default `1.0`. Width of spacing between candles                           |
+| gridLineAmount     | Default `5`. Number of grid lines to draw. Labels automatically assigned  |
+| gridLineWidth      | Default `0.5`. Width of grid lines                                        |
+| gridLineColor      | Default `Colors.grey`. Color of grid lines                                |
+| gridLineLabelColor | Default `Colors.grey`. Color of grid line labels                          |
+| labelPrefix        | Default `"$"`. Prefix before grid line labels.                            |
+| increasePaint      | Default `green stroke`. Paint of increasing candles.                      |
+| decreasePaint      | Default `red fill`. Paint of decreasing candles.                          |
+| volumePaint        | Default `corresponding candlestick color`. Paint of volume bars           |
 
 ## Examples
 
@@ -31,15 +32,14 @@ new OHLCVGraph(
     data: sampleData,
     enableGridLines: false,
     volumeProp: 0.2
-    )
 )
 ```
 
-<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_large.png" width="50%"><img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/dark_large.png" width="50%">
+<img src="screenshots/white_large.png" width="50%"><img src="screenshots/dark_large.png" width="50%">
 
 > Candle size dynamically changes by amount of data
 
-<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_small.png" width="50%"><img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/dark_small.png" width="50%">
+<img src="screenshots/white_small.png" width="50%"><img src="screenshots/dark_small.png" width="50%">
 
 
 ### Grid Lines
@@ -52,11 +52,41 @@ new OHLCVGraph(
     gridLineAmount: 5,
     gridLineColor: Colors.grey[300],
     gridLineLabelColor: Colors.grey
-    )
 )
 ```
 
-<img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_small_gridlines.png" width="50%"><img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/dark_large_gridlines.png" width="50%">
+<img src="screenshots/white_small_gridlines.png" width="50%"><img src="screenshots/dark_large_gridlines.png" width="50%">
+
+
+### Style Example
+
+```dart
+new OHLCVGraph(
+    data: sampleData,
+    enableGridLines: true,
+    volumeProp: 0.2,
+    gridLineAmount: 5,
+    gridLineColor: Colors.grey[300],
+    gridLineLabelColor: Colors.grey
+    decreasePaint: new Paint()
+      ..color = Colors.red
+      ..strokeWidth = 1.0
+      ..style = PaintingStyle.fill
+    ,
+    increasePaint: new Paint()
+      ..color = Colors.green
+      ..strokeWidth = 1.0
+      ..style = PaintingStyle.fill
+    ,
+    volumePaint: new Paint()
+      ..color = Colors.grey
+      ..style = PaintingStyle.fill,
+    candleSpacing: 1.2,
+)
+```
+
+<img src="screenshots/custom_colors.png" width="50%"><img src="screenshots/custom_colors_dark.png" width="50%">
+
 
 ### Full App Example
 ```dart
