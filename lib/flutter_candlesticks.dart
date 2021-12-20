@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class OHLCVGraph extends StatelessWidget {
   OHLCVGraph({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
     this.lineWidth = 1.0,
     this.fallbackHeight = 100.0,
     this.fallbackWidth = 300.0,
@@ -13,8 +13,8 @@ class OHLCVGraph extends StatelessWidget {
     this.gridLineWidth = 0.5,
     this.gridLineLabelColor = Colors.grey,
     this.labelPrefix = "\$",
-    @required this.enableGridLines,
-    @required this.volumeProp,
+    required this.enableGridLines,
+    required this.volumeProp,
     this.increaseColor = Colors.green,
     this.decreaseColor = Colors.red,
   })  : assert(data != null),
@@ -82,16 +82,16 @@ class OHLCVGraph extends StatelessWidget {
 
 class _OHLCVPainter extends CustomPainter {
   _OHLCVPainter(this.data,
-      {@required this.lineWidth,
-      @required this.enableGridLines,
-      @required this.gridLineColor,
-      @required this.gridLineAmount,
-      @required this.gridLineWidth,
-      @required this.gridLineLabelColor,
-      @required this.volumeProp,
-      @required this.labelPrefix,
-      @required this.increaseColor,
-      @required this.decreaseColor});
+      {required this.lineWidth,
+      required this.enableGridLines,
+      required this.gridLineColor,
+      required this.gridLineAmount,
+      required this.gridLineWidth,
+      required this.gridLineLabelColor,
+      required this.volumeProp,
+      required this.labelPrefix,
+      required this.increaseColor,
+      required this.decreaseColor});
 
   final List data;
   final double lineWidth;
@@ -105,12 +105,12 @@ class _OHLCVPainter extends CustomPainter {
   final Color increaseColor;
   final Color decreaseColor;
 
-  double _min;
-  double _max;
-  double _maxVolume;
+  double? _min;
+  double? _max;
+  double? _maxVolume;
 
   List<TextPainter> gridLineTextPainters = [];
-  TextPainter maxVolumePainter;
+  late TextPainter maxVolumePainter;
 
   numCommaParse(number) {
     return number.round().toString().replaceAllMapped(
@@ -137,7 +137,7 @@ class _OHLCVPainter extends CustomPainter {
       double gridLineValue;
       for (int i = 0; i < gridLineAmount; i++) {
         // Label grid lines
-        gridLineValue = _max - (((_max - _min) / (gridLineAmount - 1)) * i);
+        gridLineValue = _max! - (((_max! - _min!) / (gridLineAmount - 1)) * i);
 
         String gridLineText;
         if (gridLineValue < 1) {
@@ -181,20 +181,20 @@ class _OHLCVPainter extends CustomPainter {
     }
 
     final double volumeHeight = size.height * volumeProp;
-    final double volumeNormalizer = volumeHeight / _maxVolume;
+    final double volumeNormalizer = volumeHeight / _maxVolume!;
 
     double width = size.width;
     final double height = size.height * (1 - volumeProp);
 
     if (enableGridLines) {
-      InlineSpan inlineSpan = gridLineTextPainters[0].text;
+      InlineSpan inlineSpan = gridLineTextPainters[0].text!;
       width = size.width - inlineSpan.toPlainText().length * 6;
       Paint gridPaint = new Paint()
         ..color = gridLineColor
         ..strokeWidth = gridLineWidth;
 
       double gridLineDist = height / (gridLineAmount - 1);
-      double gridLineY;
+      late double gridLineY;
 
       // Draw grid lines
       for (int i = 0; i < gridLineAmount; i++) {
@@ -211,7 +211,7 @@ class _OHLCVPainter extends CustomPainter {
       maxVolumePainter.paint(canvas, new Offset(0.0, gridLineY + 2.0));
     }
 
-    final double heightNormalizer = height / (_max - _min);
+    final double heightNormalizer = height / (_max! - _min!);
     final double rectWidth = width / data.length;
 
     double rectLeft;
